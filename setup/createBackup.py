@@ -9,11 +9,13 @@ __status__ = "Production"
 import os, os.path
 import zipfile
 from datetime import datetime
-
-## This function check current date and its add to filename
 dateTime = str(datetime.now())
-filenameScripts = "E:\BackupReportsScripts\Scripts\\" + dateTime[:10]+ "Scripts.zip"
-filenameReports = "E:\BackupReportsScripts\Reports\\" + dateTime[:10] + "Reports.zip"
+
+## Set input and output directories
+repoScripts = 'D:\Workspace\Scripts'
+repoReports = 'M:\Thesis\Reports'
+backupRepoScripts = 'E:\BackupReportsScripts\Scripts\\" + dateTime[:10] + "Scripts.zip'
+backupRepoReports = 'E:\BackupReportsScripts\Reports\\" + dateTime[:10] + "Reports.zip'
 
 ## This function zips the workspace
 def zip_dir(dirpath, zippath):
@@ -31,5 +33,5 @@ def zip_dir(dirpath, zippath):
     fzip.close()
 
 ## Zip the scripts and reports from workspaces to backup USB drive
-zip_dir(dirpath = 'D:\Workspace\Scripts', zippath = filenameScripts)
-zip_dir(dirpath = 'M:\Thesis\Reports', zippath = filenameReports)
+zip_dir(dirpath = repoScripts, zippath = backupRepoScripts)
+zip_dir(dirpath = repoReports, zippath = backupRepoReports)
