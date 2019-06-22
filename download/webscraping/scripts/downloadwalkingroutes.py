@@ -26,7 +26,8 @@ def read_gpx_to_geodataframe(input_filepath):
 
 
 # Constant variables
-output_filepath = "C:/Users/David/Downloads/Wandelroutes/5653357.gpx"
+temp_filepath = "C:/Users/David/Downloads/Wandelroutes/5653357.gpx"
+output_filepath = "C:/Users/David/Downloads/Wandelroutes/5653357.json"
 route_search_url = ""
 route_url = ""
 route_search_headers = {"Accept": "*/*",
@@ -82,32 +83,30 @@ response = requests.post(url=route_search_url, headers=route_search_headers,
                          data=route_search_data)
 
 
-# rows_list = []
-# input_rows = [1, 2, 3]
-# download_to_file(route_url, default_headers, filepath)
-# for row in input_rows:
-#
-#     layer = fiona.open(filepath, layer='tracks')
-#     geom = layer[0]
-#     route_name = geom['properties']['name']
-#     route_geodata = {'type': 'MultiLineString',
-#                      'coordinates': geom['geometry']['coordinates']}
-#     print(route_geodata)
-#     route_geometry = shape(route_geodata)
-#     route_dict = {'name': route_name,
-#                   'geometry': route_geometry}
-#     rows_list.append(route_dict)
-#
-#
-# print(rows_list)
-# routes_gdf = gpd.GeoDataFrame(rows_list)
-# routes_gdf.crs = {'init': 'epsg:4326', 'no_defs': True}
-# print(routes_gdf.crs)
-# # routes_gdf.to_crs({'init': 'epsg:28992'})
-# routes_gdf.plot()
-# plt.show()
-# print(routes_gdf.geometry)
-# print(routes_gdf.crs)
+rows_list = []
+input_rows = [1, 2, 3]
+download_to_file(route_url, default_headers, filepath)
+for row in input_rows:
+
+    layer = fiona.open(filepath, layer='tracks')
+    geom = layer[0]
+    route_name = geom['properties']['name']
+    route_geodata = {'type': 'MultiLineString',
+                     'coordinates': geom['geometry']['coordinates']}
+    print(route_geodata)
+    route_geometry = shape(route_geodata)
+    route_dict = {'name': route_name,
+                  'geometry': route_geometry}
+    rows_list.append(route_dict)
+
+
+routes_gdf = gpd.GeoDataFrame(rows_list)
+routes_gdf.crs = {'init': 'epsg:4326', 'no_defs': True}
+routes_gdf.to_file(filename=output_filepath, driver="GeoJSON")
+
+routes_gdf.plot()
+plt.show()
+
 
 
 
